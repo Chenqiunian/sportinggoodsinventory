@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!--加载CSS-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/solar.css" type="text/css">
+    <link rel="stylesheet" href="/css/stars.css" type="text/css">
+    <!--    <link  th:href="@{/css/bootstrap3.css}" rel="stylesheet" type="text/css">-->
+    <link href="/css/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-icons.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <!--加载js-->
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/zh-cn.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <!--    <script th:src="@{/js/bootstrap3.js}"></script>-->
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/vue.js"></script>
+    <script src="/js/sweetalert2.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/settings.js"></script>
+    <script>
+
+    </script>
+    <title>体育用品库存可视化管理系统</title>
+
+    <style>
+        .selector-for-some-widget {
+            box-sizing: content-box;
+        }
+        .btn,
+        .btn:focus, /*清除btn按钮点击出现的边框*/
+        .btn:active:focus,
+        .btn.active:focus,
+        .btn.focus,
+        .btn:active.focus,
+        .btn.active.focus,
+        .btn:hover{
+            outline: none!important;
+            background-color:rgba(28, 32, 49, 0.5);
+            box-shadow: none;
+            border-color: rgba(28, 32, 49, 0.5);
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #FFFFFF !important;
+        }
+
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #FFFFFF !important;
+        }
+
+        input:-ms-input-placeholder,
+        textarea:-ms-input-placeholder {
+            color: #FFFFFF !important;
+        }
+
+        input::-webkit-input-placeholder,
+        textarea::-webkit-input-placeholder {
+            color: #FFFFFF !important;
+        }
+        input{
+            border:none;
+        }
+
+        .slider {
+            background-color: #fff;
+            width: 278px;
+            height: 285px;
+            z-index: 999;
+            box-sizing: border-box;
+            padding: 9px;
+            border-radius: 6px;
+            box-shadow: 0 0 11px 0 #999999;
+        }
+
+        .slider .content {
+            width: 100%;
+            height: 159px;
+            position: relative;
+        }
+
+        .bg-img-div {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform: translate(0px, 0px);
+        }
+
+        .slider-img-div {
+            height: 100%;
+            position: absolute;
+            transform: translate(0px, 0px);
+        }
+
+        .bg-img-div img {
+            width: 100%;
+        }
+
+        .slider-img-div img {
+            height: 100%;
+        }
+
+        .slider .slider-move {
+            height: 60px;
+            width: 100%;
+            margin: 11px 0;
+            position: relative;
+        }
+
+        .slider .bottom {
+            height: 19px;
+            width: 100%;
+        }
+
+        .refresh-btn, .close-btn, .slider-move-track, .slider-move-btn {
+            background: url(https://static.geetest.com/static/ant/sprite.1.2.4.png) no-repeat;
+        }
+
+        .refresh-btn, .close-btn {
+            display: inline-block;
+        }
+
+        .slider-move .slider-move-track {
+            line-height: 38px;
+            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+            color: #88949d;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .slider {
+            user-select: none;
+            position: absolute;
+            margin-left: 41%;
+            margin-top: 12%;
+        }
+
+        .slider-move .slider-move-btn {
+            transform: translate(0px, 0px);
+            background-position: -5px 11.79625%;
+            position: absolute;
+            top: -12px;
+            left: 0;
+            width: 66px;
+            height: 66px;
+        }
+
+        .slider-move-btn:hover, .close-btn:hover, .refresh-btn:hover {
+            cursor: pointer
+        }
+
+        .bottom .close-btn {
+            width: 20px;
+            height: 20px;
+            background-position: 0 44.86874%;
+            float: left;
+            margin-left: 36%;
+            margin-top: -3%;
+        }
+
+        .bottom .refresh-btn {
+            width: 20px;
+            height: 20px;
+            background-position: 0 81.38425%;
+            float: left;
+            margin-left: 20px;
+            margin-top: -3%;
+        }
+        .loginstyle{
+            background-color: rgba(255,255,255,0.1);
+            width: 250px;
+            margin: 0 auto;
+            margin-top: 20px;
+            color: #FFFFFF;
+            padding:0px;
+            border-color: rgba(255,255,255,0.5);
+        }
+        .tubiao{
+            margin-left: -20px;
+            margin-right: 5px;
+        }
+        .shurukuang{
+            background-color: rgba(255,255,255,0);
+            width: 210px;
+            height: 30px;
+            color: #FFFFFF;
+            border: 0;
+            outline:none;
+            padding:0;
+            margin-right: -30px;
+            cursor: url("/images/text_cursor.png"),text;
+        }
+        .swal2-modal {
+            background-color: rgba(31,35,52,0.8) !important;
+            border: none;
+        }
+        .swal2-confirm{
+            outline: none!important;
+            background-color:rgb(28,32,49)!important;
+            box-shadow: none!important;
+        }
+        .swal2-content{
+            color: #FFFFFF!important;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    $(document).ready(function(){
+        $(".slider").css("display","none");
+        $("#anniu").mousedown(function(){
+            $("#anniu").css('background-color','rgba(28, 32, 49,0.7)');
+            $("#anniu").css('border-color','rgba(255, 255, 255,0.3)');
+        })
+        $("#anniu").mouseup(function(){
+            $("#anniu").css('background-color','rgba(28, 32, 49, 0.5)');
+            $("#anniu").css('border-color','rgba(28, 32, 49, 0.5)');
+        })
+        $("#a").mouseover(function(){
+            $("#a").css('border-color','rgba(255, 255, 255,0.7)');
+        })
+        $("#a").mouseleave(function(){
+            $("#a").css('border-color','rgba(255, 255, 255,0.5)');
+        })
+        $("#b").mouseover(function(){
+            $("#b").css('border-color','rgba(255, 255, 255,0.7)');
+        })
+        $("#b").mouseleave(function(){
+            $("#b").css('border-color','rgba(255, 255, 255,0.5)');
+        })
+    });
+</script>
+
+<div class="enable-animations layout-column" shortcuts="">
+    <div class="space">
+        <div class="stars" id="stars"></div>
+        <div class="stars2" id="stars2"></div>
+        <div class="stars3" id="stars3"></div>
+        <div class="solar-syst" id="solar-syst" style="z-index: -1">
+            <div class="sun"></div>
+            <div class="mercury"></div>
+            <div class="venus"></div>
+            <div class="earth"></div>
+            <div class="mars"></div>
+            <div class="jupiter"></div>
+            <div class="saturn"></div>
+            <div class="uranus"></div>
+            <div class="neptune"></div>
+            <div class="pluto"></div>
+            <div class="asteroids-belt"></div>
+        </div>
+    </div>
+</div>
+
+<div style="position: absolute;height: 100%;width: 100%" >
+<div id="loginform" style="background-color: rgba(255, 255, 255, 0.3); height: 500px; width: 600px; margin: 5% auto 0px; padding-top: 20px;">
+<!--    <div id="app"></div>-->
+    <div id="denglu">
+        <div>
+            <p style="color: rgb(255, 255, 255);">体育用品库存管理系统</p>
+            <div id="a" class="form-control loginstyle" style="border-color: rgba(255, 255, 255, 0.5);">
+                <i class="bi bi-person tubiao"></i>
+                <input type="text" v-model="username" placeholder="用户名" class="shurukuang" id="un">
+            </div>
+            <div id="b" class="form-control loginstyle" style="border-color: rgba(255, 255, 255, 0.5);">
+                <i class="bi bi-lock tubiao"></i>
+                <input type="password" v-model="password" placeholder="密码" class="shurukuang" id="pw">
+            </div>
+            <button @click="submit" id="login" class="btn btn-primary">登录</button>
+        </div>
+    </div>
+<!--    <script src="/js/slide-verify.js"></script>-->
+</div>
+</div>
+<script type="text/javascript">
+    //import pintuverify from "../components/slide-verify.vue";
+    //import loadingelement from "../components/loading.vue";
+    //Vue.component("loading-element",loadingelement)
+    var vm = new Vue({
+        el : "#denglu",
+        data : {
+            username :"",
+            password :"",
+            loading:"false"
+        },
+        methods: {
+            submit : function () {
+                if(this.$data.username==""){
+                    swal("","请填写用户名！","warning").then(function(){$("#un").focus()});
+                    return;
+                }
+                if(this.$data.password==""){
+                    swal("","请填写密码！","warning").then(function(){$("#pw").focus()});
+                    return;
+                }
+                //$("#app").css("display","block");
+                $(".slider").css("display","block");
+                refreshCaptcha();
+
+            }
+        }
+    });
+</script>
+
+<div class="slider">
+    <div class="content">
+        <div class="bg-img-div">
+            <img id="bg-img" src="" alt/>
+        </div>
+        <div class="slider-img-div">
+            <img id="slider-img" src="" alt/>
+        </div>
+    </div>
+    <div class="slider-move">
+        <div class="slider-move-track">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拖动滑块完成拼图验证
+        </div>
+        <div class="slider-move-btn"></div>
+    </div>
+    <div class="bottom">
+        <div class="close-btn"></div>
+        <div class="refresh-btn"></div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.1.0/enc-base64.js"></script>
+<script>
+
+    // base64
+    var Base64 = {
+        _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+        encode: function (e) {
+            var t = "";
+            var n, r, i, s, o, u, a;
+            var f = 0;
+            e = Base64._utf8_encode(e);
+            while (f < e.length) {
+                n = e.charCodeAt(f++);
+                r = e.charCodeAt(f++);
+                i = e.charCodeAt(f++);
+                s = n >> 2;
+                o = (n & 3) << 4 | r >> 4;
+                u = (r & 15) << 2 | i >> 6;
+                a = i & 63;
+                if (isNaN(r)) {
+                    u = a = 64
+                } else if (isNaN(i)) {
+                    a = 64
+                }
+                t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+            }
+            return t
+        },
+        decode: function (e) {
+            var t = "";
+            var n, r, i;
+            var s, o, u, a;
+            var f = 0;
+            e = e.replace(/[^A-Za-z0-9+/=]/g, "");
+            while (f < e.length) {
+                s = this._keyStr.indexOf(e.charAt(f++));
+                o = this._keyStr.indexOf(e.charAt(f++));
+                u = this._keyStr.indexOf(e.charAt(f++));
+                a = this._keyStr.indexOf(e.charAt(f++));
+                n = s << 2 | o >> 4;
+                r = (o & 15) << 4 | u >> 2;
+                i = (u & 3) << 6 | a;
+                t = t + String.fromCharCode(n);
+                if (u != 64) {
+                    t = t + String.fromCharCode(r)
+                }
+                if (a != 64) {
+                    t = t + String.fromCharCode(i)
+                }
+            }
+            t = Base64._utf8_decode(t);
+            return t
+        },
+        _utf8_encode: function (e) {
+            e = e.replace(/rn/g, "n");
+            var t = "";
+            for (var n = 0; n < e.length; n++) {
+                var r = e.charCodeAt(n);
+                if (r < 128) {
+                    t += String.fromCharCode(r)
+                } else if (r > 127 && r < 2048) {
+                    t += String.fromCharCode(r >> 6 | 192);
+                    t += String.fromCharCode(r & 63 | 128)
+                } else {
+                    t += String.fromCharCode(r >> 12 | 224);
+                    t += String.fromCharCode(r >> 6 & 63 | 128);
+                    t += String.fromCharCode(r & 63 | 128)
+                }
+            }
+            return t
+        },
+        _utf8_decode: function (e) {
+            var t = "";
+            var n = 0;
+            var r = 0;
+            var c1 = 0;
+            var c2 = 0;
+            var c3 = 0;
+            while (n < e.length) {
+                r = e.charCodeAt(n);
+                if (r < 128) {
+                    t += String.fromCharCode(r);
+                    n++
+                } else if (r > 191 && r < 224) {
+                    c2 = e.charCodeAt(n + 1);
+                    t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+                    n += 2
+                } else {
+                    c2 = e.charCodeAt(n + 1);
+                    c3 = e.charCodeAt(n + 2);
+                    t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+                    n += 3
+                }
+            }
+            return t
+        }
+    }
+    let start = 0;
+    let startY = 0;
+    let currentCaptchaId = null;
+    let movePercent = 0;
+    const bgImgWidth = $(".bg-img-div").width();
+    let end = 206;
+    let startSlidingTime;
+    let entSlidingTime;
+    const trackArr = [];
+
+    // $(function () {
+    //     refreshCaptcha();
+    // })
+
+    $(".slider-move-btn").mousedown(function (event) {
+        // console.log("bb")
+        startSlidingTime = new Date();
+        start = event.pageX;
+        startY = event.pageY;
+        $(".slider-move-btn").css("background-position", "-5px 31.0092%")
+        window.addEventListener("mousemove", move);
+        window.addEventListener("mouseup", up);
+    });
+
+    $(".slider-move-btn").on("touchstart", function (event) {
+        // console.log("aa")
+        startSlidingTime = new Date();
+        start = event.pageX;
+        startY = event.pageY;
+        if (start === undefined) {
+            start = event.originalEvent.targetTouches[0].pageX
+            startY = event.originalEvent.targetTouches[0].pageY;
+        }
+        $(".slider-move-btn").css("background-position", "-5px 31.0092%")
+        window.addEventListener("touchmove", move);
+        window.addEventListener("touchend", up);
+    });
+
+    function move(event) {
+        if (event.touches) {
+            event = event.touches[0];
+        }
+        let moveX = event.pageX - start;
+        let pageX = event.pageX;
+        let pageY = event.pageY;
+        // console.log("x:", pageX, "y:", pageY, "time:", new Date().getTime() - startSlidingTime.getTime());
+        trackArr.push({x: pageX - start, y: pageY - startY, t: (new Date().getTime() - startSlidingTime.getTime())});
+        if (moveX < 0) {
+            moveX = 0;
+        } else if (moveX > end) {
+            moveX = end;
+        }
+        // if (moveX > 0 && moveX <= end) {
+        $(".slider-move-btn").css("transform", "translate(" + moveX + "px, 0px)")
+        $(".slider-img-div").css("transform", "translate(" + moveX + "px, 0px)")
+        // }
+        movePercent = moveX / bgImgWidth;
+    }
+
+    function up(event) {
+        entSlidingTime = new Date();
+        // console.log(currentCaptchaId, movePercent, bgImgWidth);
+        window.removeEventListener("mousemove", move);
+        window.removeEventListener("mouseup", up);
+        valid();
+    }
+
+
+    $(".close").click(function () {
+
+    });
+
+    $(".refresh-btn").click(function () {
+        refreshCaptcha();
+    });
+
+    function valid() {
+        // console.log("=======================")
+        // console.log("startTime", startSlidingTime);
+        // console.log("endTime", entSlidingTime);
+        // console.log("track", JSON.stringify(trackArr));
+
+        let data = {
+            bgImageWidth: bgImgWidth,
+            bgImageHeight: $(".slider-img-div").height(),
+            sliderImageWidth: $(".slider-img-div").width(),
+            sliderImageHeight: $(".slider-img-div").height(),
+            startSlidingTime: startSlidingTime,
+            entSlidingTime: entSlidingTime,
+            trackList: trackArr
+        };
+        //const encData = Base64.encode(JSON.stringify(data));
+
+
+
+        //解决JSON.stringify(data)Date转换不正确
+        function dateFormat(date, fmt) {
+            if (null == date || undefined == date) return '';
+            let o = {
+                "M+": date.getMonth() + 1, //月份
+                "d+": date.getDate(), //日
+                "h+": date.getHours(), //小时
+                "m+": date.getMinutes(), //分
+                "s+": date.getSeconds(), //秒
+                "S": date.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (let k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        Date.prototype.toJSON = function () { return dateFormat(this,'yyyy-MM-dd hh:mm:ss')}
+
+        let username = $("#un").val();
+        let password = $("#pw").val();
+        $("#pw").val();
+        $.ajax({
+            type:"POST",
+            url:"checkCaptcha?id=" + currentCaptchaId,
+            contentType: "application/json", //必须这样写
+            dataType:"json",
+            data:JSON.stringify(data),
+            success:function (res) {
+                console.log(res);
+                if(res.msg!=true&&res.msg!=false){
+                    swal("",res.msg,"warning");
+                }
+                if(res.msg){
+
+                }
+                refreshCaptcha();
+            }
+        })
+        // $.post("check", {
+        //     contentType: "application/json",
+        //     id: currentCaptchaId,
+        //     data: encData
+        // }, function (res) {
+        //     console.log(res);
+        //     if (res) {
+        //         alert("验证成功!!!");
+        //     }
+        //     refreshCaptcha();
+        // })
+    }
+
+
+    function refreshCaptcha() {
+        $.get("refreshCaptcha", function (data) {
+            console.log(data);
+            if(data.id!=undefined){
+                reset();
+                currentCaptchaId = data.id;
+                $("#bg-img").attr("src", data.captcha.backgroundImage);
+                $("#slider-img").attr("src", data.captcha.sliderImage);
+            }
+            else{
+                let result = eval("("+data+")");
+                swal("",result.msg,"warning");
+            }
+        })
+    }
+
+    function reset() {
+        $(".slider-move-btn").css("background-position", "-5px 11.79625%")
+        $(".slider-move-btn").css("transform", "translate(0px, 0px)")
+        $(".slider-img-div").css("transform", "translate(0px, 0px)")
+        start = 0;
+        startSlidingTime = null;
+        entSlidingTime = null;
+        trackArr.length = 0;
+        movePercent = 0;
+        currentCaptchaId = null;
+        startY = 0;
+    }
+
+    $(".close-btn").click(function(){
+        $(".slider").css("display","none");
+    })
+</script>
+
+</body>
+</html>

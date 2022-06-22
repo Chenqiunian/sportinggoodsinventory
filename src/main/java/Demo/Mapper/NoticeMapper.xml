@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Demo.Mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="Demo.Entity.Notice" >
+    <id column="noticeid" property="noticeid" jdbcType="INTEGER" />
+    <result column="noticetime" property="noticetime" jdbcType="TIMESTAMP" />
+    <result column="noticedetail" property="noticedetail" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <collection property="noticeList" ofType="Demo.Entity.Notice">
+      <id column="noticeid" property="noticeid" javaType="int" />
+      <result column="noticetime" property="noticetime" javaType="java.sql.Timestamp" />
+      <result column="noticedetail" property="noticedetail" javaType="String" />
+      <result column="userid" property="userid" javaType="int" />
+      <result column="username" property="username" javaType="String" />
+      <result column="time" property="time" javaType="int" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    noticeid, noticetime, noticedetail, userid, username, time
+  </sql>
+  <!--自己写-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from notice;
+  </select>
+  <!--自己写-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="Demo.Entity.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeid != null" >
+        noticeid,
+      </if>
+      <if test="noticetime != null" >
+        noticetime,
+      </if>
+      <if test="noticedetail != null" >
+        noticedetail,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeid != null" >
+        #{noticeid,jdbcType=INTEGER},
+      </if>
+      <if test="noticetime != null" >
+        #{noticetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticedetail != null" >
+        #{noticedetail,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Demo.Entity.Notice" >
+    update notice
+    <set >
+      <if test="noticetime != null" >
+        noticetime = #{noticetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticedetail != null" >
+        noticedetail = #{noticedetail,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+    </set>
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </update>
+</mapper>

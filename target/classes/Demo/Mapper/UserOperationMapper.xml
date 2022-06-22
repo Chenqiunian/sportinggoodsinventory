@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Demo.Mapper.UserOperationMapper" >
+  <resultMap id="BaseResultMap" type="Demo.Entity.UserOperation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="operationobject" property="operationobject" jdbcType="VARCHAR" />
+    <result column="details" property="details" jdbcType="VARCHAR" />
+    <collection property="operationList" ofType="Demo.Entity.UserOperation">
+      <id column="id" property="id" javaType="int" />
+      <result column="date" property="date" javaType="java.sql.Timestamp" />
+      <result column="userid" property="userid" javaType="int" />
+      <result column="name" property="name" javaType="String" />
+      <result column="operation" property="operation" javaType="String" />
+      <result column="number" property="number" javaType="int" />
+      <result column="operationobject" property="operationobject" javaType="String" />
+      <result column="details" property="details" javaType="String" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, date, userid, name, operation, number, operationobject, details
+  </sql>
+  <!--自己写-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from useroperation
+  </select>
+  <!--自己写-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from useroperation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from useroperation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Demo.Entity.UserOperation" >
+    insert into useroperation (id, date, userid, 
+      name, operation, number, 
+      operationobject, details)
+    values (#{id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, 
+      #{operationobject,jdbcType=VARCHAR}, #{details,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Demo.Entity.UserOperation" >
+    insert into useroperation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="operationobject != null" >
+        operationobject,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="operationobject != null" >
+        #{operationobject,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Demo.Entity.UserOperation" >
+    update useroperation
+    <set >
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="operationobject != null" >
+        operationobject = #{operationobject,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Demo.Entity.UserOperation" >
+    update useroperation
+    set date = #{date,jdbcType=TIMESTAMP},
+      userid = #{userid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      operationobject = #{operationobject,jdbcType=VARCHAR},
+      details = #{details,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

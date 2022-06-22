@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Demo.Mapper.ChatCacheMapper" >
+  <resultMap id="BaseResultMap" type="Demo.Entity.ChatCache" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="senduserid" property="senduserid" jdbcType="INTEGER" />
+    <result column="acceptuserid" property="acceptuserid" jdbcType="INTEGER" />
+    <result column="sendusername" property="sendusername" jdbcType="VARCHAR" />
+    <collection property="chatCacheList" ofType="Demo.Entity.ChatCache">
+      <id column="id" property="id" javaType="INTEGER" />
+      <result column="sendtime" property="sendtime" javaType="java.sql.Timestamp" />
+      <result column="message" property="message" javaType="String" />
+      <result column="senduserid" property="senduserid" javaType="int" />
+      <result column="acceptuserid" property="acceptuserid" javaType="int" />
+      <result column="sendusername" property="sendusername" javaType="String" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sendtime, message, senduserid, acceptuserid, sendusername
+  </sql>
+  <!--自己写-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from chatcache
+  </select>
+  <select id="selectByAcceptUserId" resultMap="BaseResultMap">
+    select * from chatcache where acceptuserid = #{acceptUserId}
+  </select>
+  <delete id="deleteByAcceptUserId">
+    delete from chatcache where acceptuserid = #{acceptUserId}
+  </delete>
+  <!--自己写-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from chatcache
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from chatcache
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="Demo.Entity.ChatCache" >
+    insert into chatcache
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sendtime != null" >
+        sendtime,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="senduserid != null" >
+        senduserid,
+      </if>
+      <if test="acceptuserid != null" >
+        acceptuserid,
+      </if>
+      <if test="sendusername != null" >
+        sendusername,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="senduserid != null" >
+        #{senduserid,jdbcType=INTEGER},
+      </if>
+      <if test="acceptuserid != null" >
+        #{acceptuserid,jdbcType=INTEGER},
+      </if>
+      <if test="sendusername != null" >
+        #{sendusername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Demo.Entity.ChatCache" >
+    update chatcache
+    <set >
+      <if test="sendtime != null" >
+        sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="senduserid != null" >
+        senduserid = #{senduserid,jdbcType=INTEGER},
+      </if>
+      <if test="acceptuserid != null" >
+        acceptuserid = #{acceptuserid,jdbcType=INTEGER},
+      </if>
+      <if test="sendusername != null" >
+        sendusername = #{sendusername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Demo.Entity.ChatCache" >
+    update chatcache
+    set sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      message = #{message,jdbcType=VARCHAR},
+      senduserid = #{senduserid,jdbcType=INTEGER},
+      acceptuserid = #{acceptuserid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

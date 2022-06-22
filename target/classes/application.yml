@@ -1,0 +1,62 @@
+server:
+  # 端口
+  port: 81
+  servlet:
+    session:
+      timeout: 50400 #14个小时
+      cookie:
+        max-age: 50400
+    # 项目名称
+    #context-path : /SportingGoodsInventory
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sportinggoodsdb?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+    favicon:
+      enabled: false #关闭默认的favicon,将自己的图标放在static下显示自己的图标
+
+  mail:
+    host: smtp.qq.com
+    username: 2809205039@qq.com # 邮箱账号
+    password: jmlipewyoerydefh # 邮箱账号授权码： 设置-账户-生成授权码
+    port: 465
+    nickname: 体育用品库存管理系统
+    from: 2809205039@qq.com
+    default-encoding: UTF-8
+
+    properties:
+      mail:
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+          ssl:
+            enable: true
+
+# 滑块验证码配置， 详细请看 cloud.tianai.captcha.autoconfiguration.SliderCaptchaProperties 类
+captcha:
+  slider:
+    # 验证码过期时间，默认是1分钟,单位毫秒， 可以根据自身业务进行调整
+    expire: 60000
+    # 使用加载系统自带的资源， 默认是true
+    init-default-resource: true
+    # 验证码会提前缓存一些生成好的验证数据， 默认是20
+    cacheSize: 20
+    # 因为缓存池会缓存 webp 和jpg+png 两种类型的图片， 所有这里可以配置webp生成的数量， 默认是 总缓存的70%(captcha.cacheSize*0.7)
+    webp-cache-size: 16
+    # 缓存拉取失败后等待时间 默认是 5秒钟
+    wait-time: 5000
+    # 缓存检查间隔 默认是2秒钟
+    period:
+    # 是否加入混淆滑块，默认不加入
+    obfuscate: true
+

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Demo.Mapper.PortMapper" >
+  <resultMap id="BaseResultMap" type="Demo.Entity.Port" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goodsid" property="goodsid" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="unitprice" property="unitprice" jdbcType="DOUBLE" />
+    <result column="totalprice" property="totalprice" jdbcType="DOUBLE" />
+    <result column="operation" property="operation" jdbcType="VARCHAR" />
+    <result column="trader" property="trader" jdbcType="VARCHAR" />
+    <result column="details" property="details" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <collection property="portList" ofType="Demo.Entity.Port">
+      <id column="id" property="id" javaType="int" />
+      <id column="goodsid" property="goodsid" javaType="int" />
+      <result column="date" property="date" javaType="java.sql.Timestamp" />
+      <result column="image" property="image" javaType="String" />
+      <result column="name" property="name" javaType="String" />
+      <result column="number" property="number" javaType="int" />
+      <result column="unitprice" property="unitprice" javaType="double" />
+      <result column="totalprice" property="totalprice" javaType="double" />
+      <result column="operation" property="operation" javaType="String" />
+      <result column="trader" property="trader" javaType="String" />
+      <result column="details" property="details" javaType="String" />
+      <result column="state" property="state" javaType="String" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,goodsid, date, image, name, number, unitprice, totalprice, operation, trader, details,state
+  </sql>
+  <!--自己写-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from importandexport
+  </select>
+
+  <select id="selectImport" resultMap="BaseResultMap">
+    select * from importandexport where operation = '进货';
+  </select>
+
+  <select id="selectExport" resultMap="BaseResultMap">
+    select * from importandexport where operation = '出货';
+  </select>
+
+  <update id="setPortState">
+    update importandexport set state = '有效' where id in <foreach collection="array" item="id" separator="," open="(" close=")">#{id}</foreach>
+  </update>
+  <!--自己写-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from importandexport
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from importandexport
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Demo.Entity.Port" >
+    insert into importandexport (id,goodsid, date, image,
+      name, number, unitprice, 
+      totalprice, operation, trader, 
+      details,state)
+    values (#{id,jdbcType=INTEGER},#{goodsid,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, #{image,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{unitprice,jdbcType=DOUBLE}, 
+      #{totalprice,jdbcType=DOUBLE}, #{operation,jdbcType=VARCHAR}, #{trader,jdbcType=VARCHAR}, 
+      #{details,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Demo.Entity.Port" >
+    insert into importandexport
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsid != null" >
+        goodsid,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="unitprice != null" >
+        unitprice,
+      </if>
+      <if test="totalprice != null" >
+        totalprice,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="trader != null" >
+        trader,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="totalprice != null" >
+        #{totalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="trader != null" >
+        #{trader,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Demo.Entity.Port" >
+    update importandexport
+    <set >
+      <if test="goodsid != null" >
+        goodsid = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="unitprice != null" >
+        unitprice = #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="totalprice != null" >
+        totalprice = #{totalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="trader != null" >
+        trader = #{trader,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Demo.Entity.Port" >
+    update importandexport
+    set goodsid = #{goodsid,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP},
+      image = #{image,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      unitprice = #{unitprice,jdbcType=DOUBLE},
+      totalprice = #{totalprice,jdbcType=DOUBLE},
+      operation = #{operation,jdbcType=VARCHAR},
+      trader = #{trader,jdbcType=VARCHAR},
+      details = #{details,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

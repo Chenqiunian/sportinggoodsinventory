@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Demo.Mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="Demo.Entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="headimage" property="headimage" jdbcType="VARCHAR" />
+    <result column="usertype" property="usertype" jdbcType="VARCHAR" />
+    <result column="userstate" property="userstate" jdbcType="VARCHAR" />
+    <collection property="userList" ofType="Demo.Entity.User">
+      <id column="id" property="id" javaType="int" />
+      <result column="username" property="username" javaType="String" />
+      <result column="name" property="name" javaType="String" />
+      <result column="password" property="password" javaType="String" />
+      <result column="gender" property="gender" javaType="String" />
+      <result column="age" property="age" javaType="int" />
+      <result column="email" property="email" javaType="String" />
+      <result column="headimage" property="headimage" javaType="String" />
+      <result column="usertype" property="usertype" javaType="String" />
+      <result column="userstate" property="userstate" javaType="String" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, name, password, gender, age, email, headimage, usertype, userstate
+  </sql>
+  <!--自己写-->
+  <select id="selectall" resultMap="BaseResultMap">
+    select * from users where usertype = "普通用户"
+  </select>
+  <select id="selectByEmailAddress" resultMap="BaseResultMap">
+    select * from users where email = #{email}
+  </select>
+  <select id="checkExist" resultMap="BaseResultMap">
+    select * from users where username = #{username}
+  </select>
+  <select id="userLogin" resultMap="BaseResultMap">
+    select * from users where username = #{username} and password = #{password}
+  </select>
+  <select id="selectByEmail" resultMap="BaseResultMap">
+    select * from users where email = #{email}
+  </select>
+  <update id="updatePasswordById">
+    update users set password = #{password} where id = #{id}
+  </update>
+  <!--自己写-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from users
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Demo.Entity.User" >
+    insert into users (id, username, name, password, gender, age,
+      email, headimage, usertype, 
+      userstate)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{headimage,jdbcType=VARCHAR},
+      #{usertype,jdbcType=VARCHAR}, #{userstate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="Demo.Entity.User" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="headimage != null" >
+        headimage,
+      </if>
+      <if test="usertype != null" >
+        usertype,
+      </if>
+      <if test="userstate != null" >
+        userstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="headimage != null" >
+        #{headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="userstate != null" >
+        #{userstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Demo.Entity.User" >
+    update users
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="headimage != null" >
+        headimage = #{headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        usertype = #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="userstate != null" >
+        userstate = #{userstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Demo.Entity.User" >
+    update users
+    set username = #{username,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      headimage = #{headimage,jdbcType=VARCHAR},
+      usertype = #{usertype,jdbcType=VARCHAR},
+      userstate = #{userstate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

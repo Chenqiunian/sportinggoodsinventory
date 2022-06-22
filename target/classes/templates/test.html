@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--加载CSS-->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/solar.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/sweetalert2.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/bootstrap-icons.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" type="text/css">
+    <!--加载js-->
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/moment.min.js}"></script>
+    <script th:src="@{/js/zh-cn.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <!--    <script th:src="@{/js/bootstrap3.js}"></script>-->
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/sweetalert2.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/js/settings.js}"></script>
+<!--    <script th:src="@{/js/slide-verify.js}"></script>-->
+    <title>test</title>
+</head>
+<body>
+<script>
+    let a = '2022-05-27 11:50:30';
+    let b = '2022-05-27 11:50:45';
+    let date1 = new Date(a.replace('-','/')).getTime();
+    let date2 = new Date(b.replace('-','/')).getTime();
+
+    let date3 = Math.floor((date2 - date1)/1000);
+
+    console.log('过去了',Math.floor(date3/86400),'天',Math.floor(date3%86400/3600),'时',Math.floor(date3%86400%3600/60),'分',Math.floor(date3%86400%3600%60),'秒');
+
+    function testdb() {
+        $.ajax({
+            url: "testdb",
+            type: "POST",
+            xhrFields: {withCredentials: true},
+            data: {},
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataTypes: "json",
+            async: false,
+            success: function (response) {
+                let result = eval("("+response+")");
+                swal(result.msg);
+            },
+            error: function () {
+                swal("", "未知错误！", "error");
+            }
+        });
+    }
+</script>
+<button class="btn btn-primary" onclick="testdb()">测试数据库</button>
+
+</body>
+</html>
